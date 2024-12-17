@@ -6,9 +6,20 @@ const Quiz = ({ data }) => {
             {data.map((item, index) => (
                 <div className="card " key={index}>
                 <h3>{item.question}</h3>
-                <p><strong>Selected Answer:</strong> {item.selectedAnswer}</p>
-                <p><strong>Correct Answer:</strong> {item.correctAnswer}</p>
+                {item.selectedAnswer === item.correctAnswer ?
+                <>
+                <p class="text-success"><strong>Selected Answer:</strong> {item.selectedAnswer}</p>
+                <p class="text-success"><strong>Correct Answer:</strong> {item.correctAnswer}</p>
                 <p><strong>Explanation:</strong> {item.explanation}</p>
+                </>
+                :
+                <>
+                <p class="text-danger"><strong>Selected Answer:</strong> {item.selectedAnswer}</p>
+                <p class="text-success"><strong>Correct Answer:</strong> {item.correctAnswer}</p>
+                <p><strong>Explanation:</strong> {item.explanation}</p>
+                </>
+                }
+                
             </div>
                 
             ))}

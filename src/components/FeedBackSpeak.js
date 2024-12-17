@@ -16,7 +16,6 @@ const FeedBackSpeak = ({ data }) => {
                 :
                 <>
                 <div className="card " >
-                <h3></h3>
                 <p><strong>Feedback:</strong> </p>
                 <p><strong>Sample Essay:</strong> </p>
             </div>

@@ -27,19 +27,14 @@ export default function User() {
     const location = useLocation();
     useEffect(() => {
         setUrl(location.pathname);
-        //console.log(url);
     },[location]);
 
 
-    function LogOut() {
-        
-        sessionStorage.clear();
-        //window.location.reload();
+    function LogOut() {        
+        localStorage.clear();
         navigate('/');
     }
 
-
-    console.log('User render');
     return (
         <>
             <div className="wrapper">
@@ -127,9 +122,7 @@ export default function User() {
                                                     </a>
                                                 </li>
                                                 <li className={"sidebar-item " + (url === '/results' ? "active" : "")}>
-                                                    <a className="sidebar-link" onClick={() => {
-                                                        navigate('/results')
-                                                    }}>
+                                                    <a className="sidebar-link" >
                                                         <CheckSquare/>
                                                         <span className="align-middle">Lịch sử thi</span>
                                                     </a>
@@ -184,7 +177,7 @@ export default function User() {
                                             >Quyền riêng tư</a>
                                         </li>
                                         <li className="list-inline-item">
-                                            <a className="text-muted"
+                                            <a className="text-muted" href="#terms"
                                             >Điều khoản sử dụng</a>
                                         </li>
                                     </ul>

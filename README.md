@@ -1,38 +1,29 @@
-
-#1 VSCODE 
+1
 # fe-vstep-online
 
 Install Project
 <br>
-
 npm install
+<br>
 
-
+<br>
 Start Project
-
-
+<br>
 npm run start
 
-
+<br>
 check frontend 
-
+<br>
 login
+<br>
 http://localhost:8888/login
-
+<br>
 register
+<br>
 http://localhost:8888/register
-
+<br>
 home
+<br>
 http://localhost:8888/home
 
-listening
-http://localhost:8888/listening
-
-reading
-http://localhost:8888/reading
-
-writing
-http://localhost:8888/writing
-
-speaking
-http://localhost:8888/speaking
+<br>

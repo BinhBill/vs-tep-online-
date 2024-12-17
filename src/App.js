@@ -11,13 +11,16 @@ import AccountInfo from "./components/AccountInfo";
 import ChangePasword from "./components/ChangePasword";
 import ExamMain from './components/User/ExamMain';
 import FeedBack from "./components/FeedBack" 
+import { email, firstName, lastName } from './services/headers';
 
 function App() {
-    let checkLogin = sessionStorage.getItem('token') === null ? true : true;
+    const isLogin = email() !== "" || firstName() !== "" || lastName() !== ""
+    
+    let checkLogin = isLogin === true ? true : false;
     
    
     function PrivateOutlet() {
-        return checkLogin ? <Outlet/> : <Navigate to="/"/>;
+        return checkLogin ? <Outlet/> : <Navigate to="/login"/>;
     }
 
 

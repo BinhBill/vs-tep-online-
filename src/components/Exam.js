@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Form, Col } from 'react-bootstrap'
+import {  useNavigate } from "react-router-dom";
+import { Form } from 'react-bootstrap'
 import {
     createExam,
     addListeningQuestion,
@@ -22,8 +22,6 @@ export default function Exam() {
     let navigate = useNavigate();
 
     const [title, setTitle] = useState("");
-
-
     const [successListenQuestion, setSucessListenQuestion] = useState(false)
 
     const [successListenTopic, setSuccessListenTopic] = useState(false)
@@ -57,8 +55,6 @@ export default function Exam() {
 
     const [successSpeak, setSucessSpeak] = useState(false)
 
-    const [titleExam, setTitleExam] = useState("");
-
     const [idExam, setIdExam] = useState("");
 
     const [idListenTopic, setIdListenTopic] = useState("")
@@ -78,7 +74,6 @@ export default function Exam() {
         if (data.data && data.status === 201) {
             window.ShowAlert('success', CREATE_SUCCESS);
             setIdExam(data.data.id);
-            setTitleExam(data.data.title)
             setSuccessListenTopic(true)
         } else {
             window.ShowAlert('danger', BUTTON_ERROR);
@@ -326,8 +321,7 @@ export default function Exam() {
     return (
         <>
             <div className="container-fluid p-0" style={{ zIndex: 1 }}>
-                <h1 className="h3 mb-3"></h1>
-
+                
                 <div className="row">
                     <div className="col-12">
                         <div className="card">

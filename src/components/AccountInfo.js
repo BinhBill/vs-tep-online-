@@ -1,29 +1,17 @@
 import React, {useEffect, useState} from "react";
-import logo from "../logo.svg";
 import {useNavigate} from "react-router-dom";
-
+import {firstName,
+    lastName,
+    email} from "../services/headers"
 
 export default function AccountInfo() {
 
-    let navigate = useNavigate();
-
-    const [account, setAccount] = useState({
-        email: '',
-        fullName: '',
-        //password: '',
-        phone: '',
-        address: '',
-        role: 'ROLE_USER'
-    })
-
+    
     useEffect(() => {
         
     }, [])
 
-    function UpdateAccInfo(e) {
-        e.preventDefault();
-        
-    }
+    
 
     return (
         <>
@@ -48,58 +36,27 @@ export default function AccountInfo() {
                                                         <input className="form-control form-control-lg" type="email"
                                                                disabled
                                                                name="email" placeholder="Nhập Email"
-                                                               value={account.email}
-                                                               onChange={(e) => {
-                                                                   setAccount(prevState => {
-                                                                       return {...prevState, email: e.target.value}
-                                                                   })
-                                                               }}/>
+                                                               value={email()}
+                                                               />
                                                     </div>
                                                     <div className="mb-3">
-                                                        <label className="form-label">Họ và tên</label>
+                                                        <label className="form-label">First Name</label>
                                                         <input className="form-control form-control-lg" type="text"
                                                                name="fullName" placeholder="Nhập họ tên đầy đủ"
-                                                               value={account.fullName}
-                                                               onChange={(e) => {
-                                                                   setAccount(prevState => {
-                                                                       return {...prevState, fullName: e.target.value}
-                                                                   })
-                                                               }}/>
+                                                               value={firstName()}
+                                                               readOnly
+                                                               />
                                                     </div>
                                                     <div className="mb-3">
-                                                        <label className="form-label">Số điện thoại</label>
+                                                        <label className="form-label">Last Name</label>
                                                         <input className="form-control form-control-lg" type="text"
-                                                               name="phone" placeholder="Nhập số điện thoại"
-                                                               value={account.phone}
-                                                               onChange={(e) => {
-                                                                   setAccount(prevState => {
-                                                                       return {...prevState, phone: e.target.value}
-                                                                   })
-                                                               }}/>
+                                                               name="fullName" placeholder="Nhập họ tên đầy đủ"
+                                                               value={lastName()}
+                                                               readOnly
+                                                               />
                                                     </div>
-                                                    <div className="mb-3">
-                                                        <label className="form-label">Địa chỉ</label>
-                                                        <input className="form-control form-control-lg" type="text"
-                                                               name="address" placeholder="Nhập địa chỉ"
-                                                               value={account.address}
-                                                               onChange={(e) => {
-                                                                   setAccount(prevState => {
-                                                                       return {...prevState, address: e.target.value}
-                                                                   })
-                                                               }}/>
-                                                    </div>
-                                                    <div className="mb-3">
-                                                        Phân quyền: <div
-                                                        className={account.role === 'ROLE_ADMIN' ? "badge bg-primary" : (account.role === 'ROLE_USER' ? "badge bg-success" : "badge bg-warning")}
-                                                    >{account.role.substring(5, account.role.length)}</div>
-                                                    </div>
-                                                    <div className="text-center mt-3">
-                                                        {/*<a href="index.html" className="btn btn-lg btn-primary">Sign in</a>*/}
-                                                        <button type="submit" className="btn btn-lg btn-primary"
-                                                                onClick={UpdateAccInfo}
-                                                        >Lưu
-                                                        </button>
-                                                    </div>
+                                                    
+                                                    
                                                 </form>
                                             </div>
                                         </div>

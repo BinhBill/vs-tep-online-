@@ -28,14 +28,7 @@ export default function Admin() {
 
 
     function LogOut() {
-        // sessionStorage.removeItem("token");
-        // sessionStorage.removeItem("email");
-        // sessionStorage.removeItem("role");
-        // sessionStorage.removeItem("userid");
-        // sessionStorage.removeItem("name");
-        // sessionStorage.removeItem("examState");
-        sessionStorage.clear();
-        //window.location.reload();
+        localStorage.clear();
         navigate('/');
     }
 

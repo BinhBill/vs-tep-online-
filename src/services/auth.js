@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {accessToken, refreshToken} from './headers'
+import {accessToken} from './headers'
 
 const   loginService = async (email, password) => {
 	try {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {accessToken, refreshToken} from './headers'
+import {accessToken} from './headers'
 
 
 const  addreading = async (category, title, content, scoreBand = 0, examId = '') => {

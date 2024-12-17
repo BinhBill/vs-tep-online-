@@ -6,7 +6,7 @@ import bg from '../bg.jpg';
 
 import { BsEye } from 'react-icons/bs';
 import { BsEyeSlash } from 'react-icons/bs';
-import { Form, Row, Col, Card, Button, InputGroup } from 'react-bootstrap'
+import { Form, Row, Col,  InputGroup } from 'react-bootstrap'
 import { registeraccount } from "../services/auth";
 
 
