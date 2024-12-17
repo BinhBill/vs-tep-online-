@@ -1,8 +1,5 @@
-<<<<<<< HEAD 
-#2 VSCODE 
-=======
-VSCODE
->>>>>>> 12374a4fa738b27f2e20c1c6ffc09f0cba677046
+
+#1 VSCODE 
 # fe-vstep-online
 
 Install Project
