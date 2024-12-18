@@ -14,12 +14,13 @@ import {
   getRamdomExam,
   getExamById,
   getExamListeningById,
+  getListeningAudio,
   getExamReadingById,
   getExamSpeakingById,
   getExamWritingById
 }
   from "../../services/exam"
-import YouTubeEmbed from "./YouTubeEmbed";
+import AudioEmbed from "./AudioEmbed";
 import {
   feedbacklistening,
   feedbackReading,
@@ -54,6 +55,10 @@ export default function ExamMain() {
   const [idListenTopicPart1, setIdListenTopicPart1] = useState("")
   const [idListenTopicPart2, setIdListenTopicPart2] = useState("")
   const [idListenTopicPart3, setIdListenTopicPart3] = useState("")
+
+  const [listenTopicPart1, setListenTopicPart1] = useState({})
+  const [listenTopicPart2, setListenTopicPart2] = useState({})
+  const [listenTopicPart3, setListenTopicPart3] = useState({})
 
   const [readTopicPart1, setReadTopicPart1] = useState({})
   const [idReadTopicPart1, setIdReadTopicPart1] = useState("")
@@ -108,9 +113,13 @@ export default function ExamMain() {
 
   const [dataSpeak, setDataSpeak] = useState({})
 
-  const [videoIdPart1, setVideoIdPart1] = useState("https://www.youtube.com/embed/3j7oZiiAOd4?si=oyUmMY8zmMetD79t")
-  const [videoIdPart2, setVideoIdPart2] = useState("https://www.youtube.com/embed/3j7oZiiAOd4?si=oyUmMY8zmMetD79t")
-  const [videoIdPart3, setVideoIdPart3] = useState("https://www.youtube.com/embed/3j7oZiiAOd4?si=oyUmMY8zmMetD79t")
+  // const [videoIdPart1, setVideoIdPart1] = useState("https://www.youtube.com/embed/3j7oZiiAOd4?si=oyUmMY8zmMetD79t")
+  // const [videoIdPart2, setVideoIdPart2] = useState("https://www.youtube.com/embed/3j7oZiiAOd4?si=oyUmMY8zmMetD79t")
+  // const [videoIdPart3, setVideoIdPart3] = useState("https://www.youtube.com/embed/3j7oZiiAOd4?si=oyUmMY8zmMetD79t")
+
+  const [audioFilePart1, setAudioFilePart1] = useState()
+  const [audioFilePart2, setAudioFilePart2] = useState()
+  const [audioFilePart3, setAudioFilePart3] = useState()
 
   const [writePart1, setWritePart1] = useState({
     topicId: "",
@@ -360,6 +369,9 @@ export default function ExamMain() {
           const idExam = getRandomInt(0, lengthExam);
           const dataExam = await getExamById(exams[idExam].id)
           const dataListen = await getExamListeningById(exams[idExam].id)
+          const audioPart1 = await getListeningAudio(dataListen?.data?.listeningTopics[0].id)
+          const audioPart2 = await getListeningAudio(dataListen?.data?.listeningTopics[1].id)
+          const audioPart3 = await getListeningAudio(dataListen?.data?.listeningTopics[2].id)
           const dataRead = await getExamReadingById(exams[idExam].id)
           const dataSpeak = await getExamSpeakingById(exams[idExam].id)
           const dataWrite = await getExamWritingById(exams[idExam].id)
@@ -374,23 +386,26 @@ export default function ExamMain() {
 
             // data Listen Part1
             setDataListenTopic1(dataListen?.data?.listeningTopics[0]);
-            setVideoIdPart1(dataListen?.data?.listeningTopics[0].content)
+            // setVideoIdPart1(dataListen?.data?.listeningTopics[0].content)
+            setAudioFilePart1(audioPart1)
             setIdListenTopicPart1(dataListen?.data?.listeningTopics[0].id)
-
+            setListenTopicPart1(dataListen?.data?.listeningTopics[0]);
             setListenQuestion1(dataListen?.data?.listeningTopics[0].questions)
 
             // data Listen Part2
             setDataListenTopic2(dataListen?.data?.listeningTopics[1]);
-            setVideoIdPart2(dataListen?.data?.listeningTopics[1].content)
-
+            // setVideoIdPart2(dataListen?.data?.listeningTopics[1].content)
+            setAudioFilePart2(audioPart2)
             setIdListenTopicPart2(dataListen?.data?.listeningTopics[1].id)
+            setListenTopicPart2(dataListen?.data?.listeningTopics[1]);
             setListenQuestion2(dataListen?.data?.listeningTopics[1].questions)
 
             // data Listen Part3
             setDataListenTopic3(dataListen?.data?.listeningTopics[2]);
-            setVideoIdPart3(dataListen?.data?.listeningTopics[2].content)
-
+            // setVideoIdPart3(dataListen?.data?.listeningTopics[2].content)
+            setAudioFilePart3(audioPart3)
             setIdListenTopicPart3(dataListen?.data?.listeningTopics[2].id)
+            setListenTopicPart3(dataListen?.data?.listeningTopics[2]);
             setListenQuestion3(dataListen?.data?.listeningTopics[2].questions)
 
             setIsListenPart1(true)
@@ -563,9 +578,9 @@ export default function ExamMain() {
               isListenPart1 === true ?
                 <>
                   <h3>
-                    {readTopicPart1.content}
+                    {listenTopicPart1.title}
                   </h3>
-                  <YouTubeEmbed videoId={videoIdPart1} /> {/* Thay thế videoId bằng ID của video YouTube bạn muốn nhúng */}
+                  <AudioEmbed src={audioFilePart1} />
                   <br />
 
                   <RadioButton onAnswersChange={handleAnswersFromChildListen1} message={listenQuestion1} />
@@ -583,9 +598,9 @@ export default function ExamMain() {
               isListenPart2 === true ?
                 <>
                   <h3>
-                    {readTopicPart1.content}
+                    {listenTopicPart2.title}
                   </h3>
-                  <YouTubeEmbed videoId={videoIdPart2} /> {/* Thay thế videoId bằng ID của video YouTube bạn muốn nhúng */}
+                  <AudioEmbed src={audioFilePart2} />
                   <br />
                   <RadioButton onAnswersChange={handleAnswersFromChildListen2} message={listenQuestion2} />
                   <br />
@@ -601,9 +616,9 @@ export default function ExamMain() {
               isListenPart3 === true ?
                 <>
                   <h3>
-
+                    {listenTopicPart3.title}
                   </h3>
-                  <YouTubeEmbed videoId={videoIdPart3} /> {/* Thay thế videoId bằng ID của video YouTube bạn muốn nhúng */}
+                  <AudioEmbed src={audioFilePart3} />
                   <br />
                   <RadioButton onAnswersChange={handleAnswersFromChildListen3} message={listenQuestion3} />
                   <br />

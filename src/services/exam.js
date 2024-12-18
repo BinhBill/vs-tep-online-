@@ -150,6 +150,19 @@ const  getExamListeningById = async (id) => {
 		return error
 	}
 }
+
+const getListeningAudio = async (id) => {
+	try {
+		const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/listening/${id}`, {
+			headers: accessToken(),
+			responseType: 'blob'
+		})
+		return URL.createObjectURL(response.data);
+	} catch (error) {
+		return error
+	}
+}
+
 const  addListeningTopic = async (dataListenTopic, scoreBand= 0) => {
 	
 	try {
@@ -187,6 +200,7 @@ export {
 	getExamById,
 	getExamReadingById,
 	getExamListeningById,
+	getListeningAudio,
 	getExamWritingById,
 	getExamSpeakingById,
 	addListeningQuestion,
