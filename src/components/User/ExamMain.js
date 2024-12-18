@@ -28,6 +28,8 @@ import {
 } from "../../services/feedback"
 
 import { email } from "../../services/headers";
+import { FFmpeg } from '@ffmpeg/ffmpeg';
+import axios from 'axios';
 
 // 60 phút = 3600 giây
 const TIME_EXAM = 3600
@@ -119,20 +121,37 @@ export default function ExamMain() {
     essay: ""
   })
 
+  const ffmpeg = new FFmpeg({ log: true });
+
+  const convertToMp3 = async (audioBlob) => {
+    await ffmpeg.load();
+  
+    const arrayBuffer = await audioBlob.arrayBuffer();
+    ffmpeg.FS('writeFile', 'recording.webm', new Uint8Array(arrayBuffer));
+  
+    await ffmpeg.run('-i', 'recording.webm', 'recording.mp3');
+  
+    const data = ffmpeg.FS('readFile', 'recording.mp3');
+    const mp3Blob = new Blob([data.buffer], { type: 'audio/mp3' });
+  
+    return mp3Blob;
+  };
+
   const handleAudioData = (audioBlob) => {
     const url = URL.createObjectURL(audioBlob);
     setAudioUrl(url);
     uploadAudio(audioBlob);
   };
   const uploadAudio = async (audioBlob) => {
+    const mp3Blob = await convertToMp3(audioBlob);
     const formData = new FormData();
 
-    formData.append('file', audioBlob, 'recording.webm');
-    formData.append('ContentType', 'audio/webm');
+    formData.append('file', mp3Blob, 'recording.mp3');
+    formData.append('ContentType', 'audio/mp3');
     formData.append('ContentDisposition', 'form-data');
-    formData.append('Length', audioBlob.size);
+    formData.append('Length', mp3Blob.size);
     formData.append('Name', 'recording');
-    formData.append('FileName', 'recording.webm');
+    formData.append('FileName', 'recording.mp3');
 
     try {
       const response = await feedbackSpeaking(idSpeakTopicPart1, formData)
@@ -768,17 +787,17 @@ export default function ExamMain() {
                       <p className="mb-0">
                         {isListenPart1 === true ?
                           <>
-                          <button className="text-dark btn btn-primary" >
-                          part1
+                            <button className="text-dark btn btn-primary" >
+                              part1
                             </button>
-                            
+
                           </>
                           :
                           <>
-                          <button className="text-dark btn " >
-                          part1
+                            <button className="text-dark btn " >
+                              part1
                             </button>
-                            
+
                           </>
                         }
                       </p>
@@ -787,17 +806,17 @@ export default function ExamMain() {
                       <p className="mb-0">
                         {isListenPart2 === true ?
                           <>
-                          <button className="text-dark btn btn-primary" >
-                          part2
+                            <button className="text-dark btn btn-primary" >
+                              part2
                             </button>
-                            
+
                           </>
                           :
                           <>
-                          <button className="text-dark btn " >
-                          part2
+                            <button className="text-dark btn " >
+                              part2
                             </button>
-                            
+
                           </>
                         }
                       </p>
@@ -806,17 +825,17 @@ export default function ExamMain() {
                       <p className="mb-0">
                         {isListenPart3 === true ?
                           <>
-                          <button className="text-dark btn btn-primary" >
-                          part3
+                            <button className="text-dark btn btn-primary" >
+                              part3
                             </button>
-                            
+
                           </>
                           :
                           <>
-                          <button className="text-dark btn " >
-                          part3
+                            <button className="text-dark btn " >
+                              part3
                             </button>
-                            
+
                           </>
                         }
                       </p>
@@ -834,15 +853,15 @@ export default function ExamMain() {
                         {isReadPart1 === true ?
                           <>
                             <button className="text-dark btn btn-primary" >
-                          part1
+                              part1
                             </button>
                           </>
                           :
                           <>
-                          <button className="text-dark btn" >
-                          part1
+                            <button className="text-dark btn" >
+                              part1
                             </button>
-                            
+
                           </>
                         }
                       </p>
@@ -851,15 +870,15 @@ export default function ExamMain() {
                       <p className="mb-0">
                         {isReadPart2 === true ?
                           <>
-                          <button className="text-dark btn btn-primary" >
-                          part2
+                            <button className="text-dark btn btn-primary" >
+                              part2
                             </button>
-                            
+
                           </>
                           :
                           <>
-                          <button className="text-dark btn " >
-                          part2
+                            <button className="text-dark btn " >
+                              part2
                             </button>
                           </>
                         }
@@ -870,15 +889,15 @@ export default function ExamMain() {
                         {isReadPart3 === true ?
                           <>
                             <button className="text-dark btn btn-primary" >
-                          part3
+                              part3
                             </button>
                           </>
                           :
                           <>
-                          <button className="text-dark btn " >
-                          part3
+                            <button className="text-dark btn " >
+                              part3
                             </button>
-                            
+
                           </>
                         }
                       </p>
@@ -895,17 +914,17 @@ export default function ExamMain() {
                       <p className="mb-0">
                         {isWritePart1 === true ?
                           <>
-                          <button className="text-dark btn btn-primary" >
-                          part1
+                            <button className="text-dark btn btn-primary" >
+                              part1
                             </button>
-                            
+
                           </>
                           :
                           <>
-                          <button className="text-dark btn " >
-                          part1
+                            <button className="text-dark btn " >
+                              part1
                             </button>
-                            
+
                           </>
                         }
                       </p>
@@ -915,15 +934,15 @@ export default function ExamMain() {
                         {isWritePart2 === true ?
                           <>
                             <button className="text-dark btn btn-primary" >
-                          part2
+                              part2
                             </button>
                           </>
                           :
                           <>
-                          <button className="text-dark btn" >
-                          part2
+                            <button className="text-dark btn" >
+                              part2
                             </button>
-                            
+
                           </>
                         }
                       </p>
